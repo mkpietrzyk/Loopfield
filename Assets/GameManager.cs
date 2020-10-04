@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject badEnding;
     [SerializeField] GameObject fleet;
     [SerializeField] GameObject passingCrafts;
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerCraft;
+    [SerializeField] private GameObject playerGameObject;
     public int score = 0;
 
     public float timer = 60;
@@ -35,6 +36,10 @@ public class GameManager : MonoBehaviour
     public int powerupsCollected = 0;
 
     public int buffsCollected = 0;
+
+    public float fleetPositionX = -5f;
+    public float craftsPosition = -50f;
+    public float playerPosition = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -72,15 +77,35 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (timePassed > 60 && !isPlayerDead && gameStarted)
+        if (timePassed > 15 && !isPlayerDead && gameStarted)
         {
             scoreField.gameObject.SetActive(false);
             shieldTimer.gameObject.SetActive(false);
             healthSlider.gameObject.SetActive(false);
             gameEnd = true;
-            gameStarted = false;
             timer = 60;
-            StartCoroutine(GoodEnding());
+            if (fleet.transform.position.x < 13f)
+            {
+                fleetPositionX += Time.deltaTime * 2f;
+                fleet.transform.position = new Vector3(fleetPositionX, 0,0);
+            }
+
+            if (passingCrafts.transform.position.x < 50f)
+            {
+                craftsPosition += Time.deltaTime * 10f;
+                passingCrafts.transform.position = new Vector3(craftsPosition, 0,0);
+            }
+
+            if (playerGameObject.transform.position.x < 6)
+            {
+                playerPosition += Time.deltaTime * 2f;
+                playerGameObject.transform.position = new Vector3(playerPosition, 0,0);
+            }
+
+            if (playerGameObject.transform.position.x > 4)
+            {
+                goodEnding.SetActive(true);
+            }
         }
 
         if (timePassed < 60 && isPlayerDead && gameStarted)
@@ -89,9 +114,9 @@ public class GameManager : MonoBehaviour
             shieldTimer.gameObject.SetActive(false);
             healthSlider.gameObject.SetActive(false);
             gameEnd = true;
-            gameStarted = false;
             timer = 60;
-            StartCoroutine(BadEnding());
+            playerGameObject.SetActive(false);
+            badEnding.SetActive(true);
         }
     }
 
@@ -130,7 +155,7 @@ public class GameManager : MonoBehaviour
         timePassed = 0;
         timer = 60;
         healthSlider.value = 100;
-        player.GetComponent<PlayerController>().health = 100;
+        playerCraft.GetComponent<PlayerController>().health = 100;
         scoreField.gameObject.SetActive(true);
         shieldTimer.gameObject.SetActive(true);
         healthSlider.gameObject.SetActive(true);
@@ -152,6 +177,15 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        passingCrafts.transform.position = new Vector3(-50f,0,0);
+        fleet.transform.position = new Vector3(-18, 0 ,0);
+        gameStarted = false;
+        gameEnd = false;
+        timer = 60;
+        score = 0;
+        healthSlider.value = 100;
+        isPlayerDead = false;
+        scoreField.text = "000000";
         pauseMenu.SetActive(false);
         howToPlay.SetActive(false);
         scoreField.gameObject.SetActive(false);
@@ -160,11 +194,8 @@ public class GameManager : MonoBehaviour
         badEnding.SetActive(false);
         goodEnding.SetActive(false);
         mainMenu.SetActive(true);
-        gameStarted = false;
-        timer = 60;
-        score = 0;
-        StopCoroutine(GoodEnding());
-        StopCoroutine(BadEnding());
+        playerGameObject.SetActive(true);
+        playerGameObject.transform.position = Vector3.zero;
     }
 
     public void HowToPlay()
@@ -176,25 +207,5 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
-    }
-
-    IEnumerator GoodEnding()
-    {
-        while (gameEnd)
-        {
-            gameEnd = false;
-            yield return new WaitForSeconds(4);
-            goodEnding.SetActive(true);
-        }
-    }
-
-    IEnumerator BadEnding()
-    {
-        while (gameEnd)
-        {
-            gameEnd = false;
-            yield return new WaitForSeconds(3);
-            badEnding.SetActive(true);
-        }
     }
 }

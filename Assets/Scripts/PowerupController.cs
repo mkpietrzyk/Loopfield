@@ -19,6 +19,10 @@ public class PowerupController : MonoBehaviour
 
     private void Update()
     {
+        if (gameManager.gameEnd)
+        {
+            DestroyOnImpact();
+        }
         if (_isDestroyed)
         {
             _fade -= Time.deltaTime;
@@ -37,7 +41,7 @@ public class PowerupController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Barrier"))
         {
-            audioSource.PlayOneShot(audioSource.clip, 0.5f);
+            audioSource.PlayOneShot(audioSource.clip, 0.3f);
             gameManager.GetComponent<GameManager>().UpdateScore(30);
             DestroyOnImpact();
         }
@@ -52,6 +56,6 @@ public class PowerupController : MonoBehaviour
     private void DestroyOnImpact()
     {
         _isDestroyed = true;
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 1f);
     }
 }

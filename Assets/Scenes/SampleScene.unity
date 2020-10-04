@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 3260398}
   - component: {fileID: 3260397}
   m_Layer: 5
-  m_Name: ScoreField
+  m_Name: GoodEndingScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 25}
+  m_AnchoredPosition: {x: 0, y: -34.8}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3260397
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 57833333}
   - component: {fileID: 57833332}
   m_Layer: 5
-  m_Name: ScoreField (1)
+  m_Name: BadEndingScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -522,7 +522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 25}
+  m_AnchoredPosition: {x: 0, y: -34.8}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &57833332
@@ -3052,7 +3052,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884133120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.08, y: -0.0010139495, z: -4.564453}
+  m_LocalPosition: {x: -50, y: -0.0010139495, z: -4.564453}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1507670685}
@@ -4611,7 +4611,8 @@ MonoBehaviour:
   badEnding: {fileID: 1177400323}
   fleet: {fileID: 2013365254}
   passingCrafts: {fileID: 884133120}
-  player: {fileID: 909041027}
+  playerCraft: {fileID: 909041027}
+  playerGameObject: {fileID: 1847429299}
   score: 150
   timer: 60
   timePassed: 0
@@ -4621,6 +4622,9 @@ MonoBehaviour:
   isPlayerDead: 0
   powerupsCollected: 0
   buffsCollected: 0
+  fleetPositionX: -5
+  craftsPosition: -8
+  playerPosition: 0
 --- !u!4 &1226585341
 Transform:
   m_ObjectHideFlags: 0

@@ -30,7 +30,7 @@ public class SpawnerController : MonoBehaviour
             var randomSpawner = spawners[Random.Range(0, spawners.Length)];
             var randomBlockIndex = Random.Range(0, 20);
             var randomSpawnSpeed = Random.Range(0f,1f);
-            var randomWaitTime = Random.Range(0f, 3f);
+            var randomWaitTime = Random.Range(0f, 1.5f);
             if (randomBlockIndex == 5)
             {
                 choosenBlock = blocksPrefabs[1];
@@ -45,7 +45,7 @@ public class SpawnerController : MonoBehaviour
 
             Vector2 spawnDirection = player.transform.position - randomSpawner.transform.position;
 
-            if (gameManager.gameStarted && !gameManager.gamePaused)
+            if (gameManager.gameStarted && !gameManager.gamePaused && !gameManager.gameEnd)
             {
                 GameObject block = Instantiate(choosenBlock, randomSpawner.transform.position,
                     Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
