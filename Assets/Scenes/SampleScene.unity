@@ -2435,6 +2435,7 @@ GameObject:
   - component: {fileID: 909041030}
   - component: {fileID: 909041029}
   - component: {fileID: 909041033}
+  - component: {fileID: 909041034}
   m_Layer: 0
   m_Name: Craft
   m_TagString: Player
@@ -2724,8 +2725,109 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1226585340}
   healthSlider: {fileID: 2005258906}
+  blockHit: {fileID: 8300000, guid: 305dfcf02d3fb2449b45e89cc68abecb, type: 3}
+  healthHit: {fileID: 8300000, guid: de6bfc8d43476d34a960334d3a2152e4, type: 3}
+  barrierRefreshHit: {fileID: 8300000, guid: 68fc1e91dfceadb428e2954ea8fab636, type: 3}
+  destroyCraft: {fileID: 8300000, guid: b22e1648d71f1a945aee4f2cb6e58836, type: 3}
+  audioSource: {fileID: 909041034}
   health: 100
   isDead: 0
+--- !u!82 &909041034
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909041027}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &912622327
 GameObject:
   m_ObjectHideFlags: 0
@@ -3670,6 +3772,7 @@ MonoBehaviour:
   howToPlay: {fileID: 1922479935}
   fleet: {fileID: 2013365254}
   passingCrafts: {fileID: 884133120}
+  player: {fileID: 0}
   score: 150
   timer: 60
   timePassed: 0

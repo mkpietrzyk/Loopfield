@@ -8,11 +8,13 @@ public class PowerupController : MonoBehaviour
     private Material _material;
     private bool _isDestroyed = false;
     private float _fade = 1f;
+    public AudioSource audioSource;
 
     private void Awake()
     {
         _material = GetComponent<SpriteRenderer>().material;
         gameManager = FindObjectOfType<GameManager>();
+        audioSource.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -35,6 +37,7 @@ public class PowerupController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Barrier"))
         {
+            audioSource.PlayOneShot(audioSource.clip, 0.5f);
             gameManager.GetComponent<GameManager>().UpdateScore(30);
             DestroyOnImpact();
         }

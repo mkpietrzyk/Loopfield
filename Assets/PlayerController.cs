@@ -8,13 +8,18 @@ public class PlayerController : MonoBehaviour
 {
     public GameManager gameManager;
     public Slider healthSlider;
+    public AudioClip blockHit;
+    public AudioClip healthHit;
+    public AudioClip barrierRefreshHit;
+    public AudioClip destroyCraft;
+    public AudioSource audioSource;
     public int health = 100;
 
     public bool isDead = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -27,6 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.gameObject.CompareTag("BarrierRefresh"))
         {
+            audioSource.PlayOneShot(barrierRefreshHit, 0.5f);
             gameManager.RefreshBarrier();
         }
 
@@ -41,14 +47,16 @@ public class PlayerController : MonoBehaviour
                 health += 30;
                 healthSlider.value = health;
             }
-
+            audioSource.PlayOneShot(healthHit, 0.5f);
             healthSlider.value = health;
         }
 
         if (other.gameObject.CompareTag("Block"))
         {
+            audioSource.PlayOneShot(blockHit, 0.5f);
             if (health - 10 < 0)
             {
+                audioSource.PlayOneShot(destroyCraft, 0.5f);
                 isDead = true;
                 healthSlider.value = 0;
             }
