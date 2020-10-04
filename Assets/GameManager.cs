@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject howToPlay;
+    [SerializeField] GameObject goodEnding;
+    [SerializeField] GameObject badEnding;
     [SerializeField] GameObject fleet;
     [SerializeField] GameObject passingCrafts;
     [SerializeField] private GameObject player;
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     public bool gameEnd = false;
 
+    public bool isPlayerDead = false;
+
     public int powerupsCollected = 0;
 
     public int buffsCollected = 0;
@@ -41,6 +45,8 @@ public class GameManager : MonoBehaviour
         healthSlider.gameObject.SetActive(false);
         pauseMenu.SetActive(false);
         howToPlay.SetActive(false);
+        goodEnding.SetActive(false);
+        badEnding.SetActive(false);
     }
 
     private void Update()
@@ -56,16 +62,17 @@ public class GameManager : MonoBehaviour
         if (gameStarted && !gamePaused)
         {
             timePassed += Time.deltaTime;
-            if (timer < 0) {
+            if (timer < 0)
+            {
                 timer = 60;
             }
             else
             {
                 timer -= Time.deltaTime;
-            }   
+            }
         }
 
-        if (timePassed > 60)
+        if (timePassed > 60 && !isPlayerDead && gameStarted)
         {
             scoreField.gameObject.SetActive(false);
             shieldTimer.gameObject.SetActive(false);
@@ -73,7 +80,18 @@ public class GameManager : MonoBehaviour
             gameEnd = true;
             gameStarted = false;
             timer = 60;
-            
+            StartCoroutine(GoodEnding());
+        }
+
+        if (timePassed < 60 && isPlayerDead && gameStarted)
+        {
+            scoreField.gameObject.SetActive(false);
+            shieldTimer.gameObject.SetActive(false);
+            healthSlider.gameObject.SetActive(false);
+            gameEnd = true;
+            gameStarted = false;
+            timer = 60;
+            StartCoroutine(BadEnding());
         }
     }
 
@@ -108,6 +126,11 @@ public class GameManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         gameStarted = true;
+        isPlayerDead = false;
+        timePassed = 0;
+        timer = 60;
+        healthSlider.value = 100;
+        player.GetComponent<PlayerController>().health = 100;
         scoreField.gameObject.SetActive(true);
         shieldTimer.gameObject.SetActive(true);
         healthSlider.gameObject.SetActive(true);
@@ -134,10 +157,14 @@ public class GameManager : MonoBehaviour
         scoreField.gameObject.SetActive(false);
         shieldTimer.gameObject.SetActive(false);
         healthSlider.gameObject.SetActive(false);
+        badEnding.SetActive(false);
+        goodEnding.SetActive(false);
         mainMenu.SetActive(true);
         gameStarted = false;
         timer = 60;
         score = 0;
+        StopCoroutine(GoodEnding());
+        StopCoroutine(BadEnding());
     }
 
     public void HowToPlay()
@@ -148,6 +175,26 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
-       Application.Quit();
+        Application.Quit();
+    }
+
+    IEnumerator GoodEnding()
+    {
+        while (gameEnd)
+        {
+            gameEnd = false;
+            yield return new WaitForSeconds(4);
+            goodEnding.SetActive(true);
+        }
+    }
+
+    IEnumerator BadEnding()
+    {
+        while (gameEnd)
+        {
+            gameEnd = false;
+            yield return new WaitForSeconds(3);
+            badEnding.SetActive(true);
+        }
     }
 }
