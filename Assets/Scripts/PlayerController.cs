@@ -16,16 +16,32 @@ public class PlayerController : MonoBehaviour
     public int health = 100;
 
     public bool isDead = false;
-    // Start is called before the first frame update
+    private float _fade;
+
+    private Material _material;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-    }
+        _material = GetComponent<SpriteRenderer>().material;
 
-    // Update is called once per frame
+    }
     void Update()
     {
-        
+        if (gameManager.isPlayerDead)
+        {
+            _fade -= Time.deltaTime;
+
+            if (_fade <= 0f)
+            {
+                _fade = 0f;
+            }
+            
+            _material.SetFloat("_Fade", _fade);
+        }
+        else
+        {
+            _material.SetFloat("_Fade", 1f);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)

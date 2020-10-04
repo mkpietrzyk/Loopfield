@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 3260398}
   - component: {fileID: 3260397}
   m_Layer: 5
-  m_Name: GoodEndingScore
+  m_Name: BadEndingScoreField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 57833333}
   - component: {fileID: 57833332}
   m_Layer: 5
-  m_Name: BadEndingScore
+  m_Name: GoodEndingScoreField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3181,7 +3181,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1d5ebc0340ac5df42b3f2f8601854e69, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4602,6 +4602,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreField: {fileID: 426584076}
+  badEndingScoreField: {fileID: 3260397}
+  goodEndingScoreField: {fileID: 57833332}
   shieldTimer: {fileID: 2133503562}
   healthSlider: {fileID: 2005258906}
   mainMenu: {fileID: 1915066301}
@@ -4612,7 +4614,9 @@ MonoBehaviour:
   fleet: {fileID: 2013365254}
   passingCrafts: {fileID: 884133120}
   playerCraft: {fileID: 909041027}
+  playerBarrier: {fileID: 1730223002}
   playerGameObject: {fileID: 1847429299}
+  mainTheme: {fileID: 659467671}
   score: 150
   timer: 60
   timePassed: 0
@@ -6360,7 +6364,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1d5ebc0340ac5df42b3f2f8601854e69, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

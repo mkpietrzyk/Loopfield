@@ -10,7 +10,6 @@ public class RotationController : MonoBehaviour
     public float barrierTimer;
 
     public Rigidbody2D rb;
-    // Update is called once per frame
 
     private Vector2 _mousePos;
 

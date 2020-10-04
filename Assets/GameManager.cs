@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreField;
+    [SerializeField] TextMeshProUGUI badEndingScoreField;
+    [SerializeField] TextMeshProUGUI goodEndingScoreField;
     [SerializeField] TextMeshProUGUI shieldTimer;
     [SerializeField] private Slider healthSlider;
     [SerializeField] GameObject mainMenu;
@@ -18,7 +21,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject fleet;
     [SerializeField] GameObject passingCrafts;
     [SerializeField] private GameObject playerCraft;
+    [SerializeField] private GameObject playerBarrier;
     [SerializeField] private GameObject playerGameObject;
+    [SerializeField] private AudioSource mainTheme;
     public int score = 0;
 
     public float timer = 60;
@@ -77,7 +82,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (timePassed > 15 && !isPlayerDead && gameStarted)
+        if (timePassed > 300 && !isPlayerDead && gameStarted)
         {
             scoreField.gameObject.SetActive(false);
             shieldTimer.gameObject.SetActive(false);
@@ -92,7 +97,7 @@ public class GameManager : MonoBehaviour
 
             if (passingCrafts.transform.position.x < 50f)
             {
-                craftsPosition += Time.deltaTime * 10f;
+                craftsPosition += Time.deltaTime * 5f;
                 passingCrafts.transform.position = new Vector3(craftsPosition, 0,0);
             }
 
@@ -108,14 +113,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (timePassed < 60 && isPlayerDead && gameStarted)
+        if (timePassed < 300 && isPlayerDead && gameStarted)
         {
             scoreField.gameObject.SetActive(false);
             shieldTimer.gameObject.SetActive(false);
             healthSlider.gameObject.SetActive(false);
             gameEnd = true;
             timer = 60;
-            playerGameObject.SetActive(false);
             badEnding.SetActive(true);
         }
     }
@@ -145,10 +149,13 @@ public class GameManager : MonoBehaviour
         newPointsString += points;
 
         scoreField.text = newPointsString;
+        badEndingScoreField.text = newPointsString;
+        goodEndingScoreField.text = newPointsString;
     }
 
     public void StartGame()
     {
+        mainTheme.Stop();
         mainMenu.SetActive(false);
         gameStarted = true;
         isPlayerDead = false;
@@ -177,15 +184,24 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
+        mainTheme.Play();
+        gamePaused = false;
+        Time.timeScale = 1;
         passingCrafts.transform.position = new Vector3(-50f,0,0);
         fleet.transform.position = new Vector3(-18, 0 ,0);
+        playerGameObject.transform.position = Vector3.zero;
+        playerCraft.transform.rotation = Quaternion.identity;
+        playerBarrier.transform.rotation = Quaternion.identity;
         gameStarted = false;
         gameEnd = false;
         timer = 60;
         score = 0;
+        timePassed = 0;
         healthSlider.value = 100;
         isPlayerDead = false;
         scoreField.text = "000000";
+        badEndingScoreField.text = "000000";
+        goodEndingScoreField.text = "000000";
         pauseMenu.SetActive(false);
         howToPlay.SetActive(false);
         scoreField.gameObject.SetActive(false);
@@ -194,8 +210,6 @@ public class GameManager : MonoBehaviour
         badEnding.SetActive(false);
         goodEnding.SetActive(false);
         mainMenu.SetActive(true);
-        playerGameObject.SetActive(true);
-        playerGameObject.transform.position = Vector3.zero;
     }
 
     public void HowToPlay()

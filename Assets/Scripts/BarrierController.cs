@@ -8,22 +8,41 @@ using Random = UnityEngine.Random;
 
 public class BarrierController : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] TextMeshProUGUI shieldTimer;
     public GameManager gameManager;
     private PolygonCollider2D _polygonCollider2D;
     public Sprite[] spritesArray;
     private SpriteRenderer _spriteRenderer;
     public float barrierTimer;
+    
+    private float _fade;
+
+    private Material _material;
     void Start()
     {
         barrierTimer = gameManager.timer;
         StartCoroutine(nameof(DecreaseBarrier));
+        _material = GetComponent<SpriteRenderer>().material;
     }
 
     private void Update()
     {
         barrierTimer = gameManager.timer;
+        if (gameManager.isPlayerDead)
+        {
+            _fade -= Time.deltaTime;
+
+            if (_fade <= 0f)
+            {
+                _fade = 0f;
+            }
+            
+            _material.SetFloat("_Fade", _fade);
+        }
+        else
+        {
+            _material.SetFloat("_Fade", 1f);
+        }
         if (barrierTimer > 0) {
             var intTimer = (int) barrierTimer;
             shieldTimer.text = intTimer.ToString();
@@ -35,7 +54,7 @@ public class BarrierController : MonoBehaviour
         while (barrierTimer > 0)
         {
             var timeBarrierIndex = 60 - (int) barrierTimer;
-            if (timeBarrierIndex < 0 || timeBarrierIndex > 59)
+            if (timeBarrierIndex < 0 || timeBarrierIndex > 59 || gameManager.gameEnd)
             {
                 timeBarrierIndex = 59;
             }
